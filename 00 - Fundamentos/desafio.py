@@ -20,7 +20,7 @@
 # Se o extrato estiver em branco, exibir a mensagem: Não foram realizadas movimentações.
 # Os valores devem ser exibidos utilizando o formato R$ xxx.xx, exemplo: 1500.45 = R$ 1500.45
 
-
+# Primeiro passo: O programa começa definindo o menu de opções como uma string multilinha, representado pela variável menu.
 menu = """
     Boas vindas ao nosso banco digital!       
 Selecione a opção desejada e tecle "enter":
@@ -29,18 +29,23 @@ Selecione a opção desejada e tecle "enter":
     [3] Extrato          [4] Sair
 
 => """
-
+# Passo 2: Definição das variáveis iniciais do sistema:
 saldo = 0
 limite = 500
-extrato = ""
+extrato = "" # String que armazena o histórico das movimentações da conta.
 numero_saques = 0
-LIMITE_SAQUES = 3
+LIMITE_SAQUES = 3 # Constante que determina o número máximo de saques permitidos em um dia.
 
+# Loop principal do sistema: mantém o menu do sistema sendo exibido repetidamente até que
+# o usuário escolha a opção "4" para sair.
+# O programa aguarda a entrada do usuário para selecionar uma opção do menu. A entrada do
+# usuário é armazenada na variável "opcao".
 while True:
 
     opcao = input(menu)
 
-# Função para realizar a operação de depósito.
+# Função para realizar a operação de depósito: solicita o valor do depósito, verifica se
+# o valor é positivo, realiza o depósito, atualiza o saldo e registra a movimentação no extrato.
     if opcao == "1":
         valor = float(input("Informe o valor do depósito: "))
 
@@ -52,7 +57,10 @@ while True:
         else:
             print("Operação falhou! O valor informado é inválido.")
 
-# Função para realizar a operação de saque
+# Função para realizar a operação de saque:  solicita o valor do saque, verifica se as condições
+# para realizar o saque são atendidas (saldo suficiente, limite de saque e número máximo de saques
+# diários) e, em caso positivo, realiza o saque, atualiza o saldo, registra a movimentação no extrato
+# e incrementa o contador de saques.
     elif opcao == "2":
         valor = float(input("Informe o valor do saque: "))
 
@@ -75,11 +83,13 @@ while True:
             saldo -= valor
             extrato += f"Saque: R$ {valor:.2f}\n"
             numero_saques += 1
+            print("Saque realizado com sucesso!")
 
         else:
             print("Operação falhou! O valor informado é inválido.")
 
-# Função para realizar a operação de extrato.
+# Função para realizar a operação de extrato: exibe o extrato completo da conta, listando todas as
+# movimentações de depósito e saque realizadas, além do saldo atual.
     elif opcao == "3":
         print("\n================ EXTRATO ================")
         print("Não foram realizadas movimentações." if not extrato else extrato)
@@ -87,6 +97,7 @@ while True:
         print("==========================================")
 
     elif opcao == "4":
+        print("Sessão encerrada. Volte sempre!")
         break
 
     else:
